@@ -1,4 +1,4 @@
-##ROBOFRIENDS :
+## ROBOFRIENDS :
 A React app which access the details of robo-friends using JSON API.
 A search button created to search a particular robofriend
 
