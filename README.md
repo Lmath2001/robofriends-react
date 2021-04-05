@@ -1,3 +1,7 @@
+## ROBOFRIENDS :
+A React app which access the details of robo-friends using JSON API.
+A search button created to search a particular robofriend
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
