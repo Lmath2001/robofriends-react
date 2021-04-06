@@ -5,26 +5,65 @@ import Scroll from '../containers/Scroll';
 // import { robots } from './robots.js';
 //Using API instead of robots.js
 import './App.css';
-const App=()=>{
+import { connect } from 'react-redux';
+import { setSearchField, setRobotsRequest } from '../actions';
 
-  const [robots, setRobots]=useState([]);
-  const [searchField, setSearchField]=useState('');
+const mapStateToProps=(state)=>{
+  return(
+    {
+      searchField:state.searchRobots.searchField,
+      isPending:state.requestRobots.isPending,
+      robots:state.requestRobots.robots,
+      error:state.requestRobots.error
+    }
+  );
+}
 
-  useEffect(()=>{
-    fetch('https://jsonplaceholder.typicode.com/users')
-    .then(response=>{
-      return response.json()})
-    .then(users=>{
-      return setRobots(users);
-    })
-  },[])
+const mapDispatchToProps=(dispatch)=>{
+  return(
+    {
+      onSearchInput:(event)=>{
+        return dispatch(setSearchField(event.target.value))
+      },
+
+      onRequestRobots:()=>{
+        return dispatch(setRobotsRequest())
+      }
+    }
+  )
+
+}
+
+
+const App=(props)=>{
+
+  // const [robots, setRobots]=useState([]);
+  // const [searchField, setSearchField]=useState('');
+
+  // useEffect(()=>{
+  //   fetch('https://jsonplaceholder.typicode.com/users')
+  //   .then(response=>{
+  //     return response.json()})
+  //   .then(users=>{
+  //     return setRobots(users);
+  //   })
+  // },[])
     
-  const onSearchInput=(event)=>{
-    setSearchField(event.target.value);
-  }
+   useEffect(()=>{
+    onRequestRobots();
+  },[])
 
 
-    const filteredRobots=robots.filter((robot)=>{
+
+
+
+  // const onSearchInput=(event)=>{
+  //   setSearchField(event.target.value);
+  // }
+
+  const { searchField, onSearchInput, robots, onRequestRobots }=props;
+
+  const filteredRobots=robots.filter((robot)=>{
         return robot.name.toLowerCase().includes(searchField.toLowerCase());
     });
     // console.log(filteredRobots)
@@ -45,8 +84,7 @@ const App=()=>{
 
  
 
-
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 
 
